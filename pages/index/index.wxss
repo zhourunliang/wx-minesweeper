@@ -1,0 +1,63 @@
+/**index.wxss**/
+
+
+.game-box {
+    margin-top: 30px;
+}
+.row{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    letter-spacing: -8px;
+    display: block;
+}
+.col{
+    display: inline-block;
+    background: rgba(86, 56, 9, 0.41);
+    border: 1px solid rgb(129, 129, 129);
+    margin: 1.5px;
+    width: 50px;
+    height: 50px;
+    letter-spacing: normal;
+    position: relative;
+}
+
+.col span {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    opacity: 0;
+    font-weight: bold;
+    /* 标准箭头 */
+    cursor:default;
+}
+
+.open {
+    background:  rgb(248, 247, 245);
+}
+.col.open span {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    left:7px;
+    opacity: 1;
+    font-weight: bold;
+    /* 标准箭头 */
+    cursor:default;
+}
+
+.flag {
+    background:  rgb(233, 60, 60);
+}
+
+.col.flag span {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    left:7px;
+    opacity: 1;
+    font-weight: bold;
+    /* 标准箭头 */
+    cursor:default;
+}
+
