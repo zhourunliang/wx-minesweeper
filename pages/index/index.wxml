@@ -1,14 +1,36 @@
 <!--index.wxml-->
 <view class="container">
+  <view>
+    说明：点击扫雷，长按标记
+  </view>
+
   <view class="game-box">
 
     <ul wx:for="{{mineMap}}" wx:for-index="i" wx:for-item="row" wx:key="row" class="row">
         <li wx:for="{{row}}" wx:for-index="j" wx:for-item="col" wx:key="col" data-x="{{i}}" data-y="{{j}}" data-value="{{col.value}}" bind:tap="demining" bind:longpress="pullUpFlag" class="col  {{col.open == true ? 'open' : ''}} {{col.flag == true ? 'flag' : ''}}">
             <span wx:if="{{col.flag == true}}">F</span>
             <span wx:elif="{{col.value == 9}}" style="color:red;">M</span>
+            <span wx:elif="{{col.value == 0}}"></span>
             <span wx:else>{{col.value}}</span>
         </li>
     </ul>
     
   </view>
+
+  <view class="info">
+      <p class="">
+          剩余雷数 :
+          <span class="remain">{{ remainMineNum }}</span>
+      </p>
+      <p>
+          时间 :
+          <span class="time">{{ timesGo }}</span> S
+      </p>
+  </view>
+
+  <view class="sub">
+      <button bind:tap="restart" type="button" name="button" class="restart">重新开始</button>
+  </view>
+
+
 </view>

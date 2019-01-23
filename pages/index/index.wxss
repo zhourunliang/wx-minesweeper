@@ -1,8 +1,6 @@
 /**index.wxss**/
-
-
 .game-box {
-    margin-top: 30px;
+    margin-top: 10rpx;
 }
 .row{
     margin: 0;
@@ -25,7 +23,8 @@
 .col span {
     display: inline-block;
     position: relative;
-    top: 2px;
+    top:30rpx;
+    left:42rpx;
     opacity: 0;
     font-weight: bold;
     /* 标准箭头 */
@@ -38,8 +37,8 @@
 .col.open span {
     display: inline-block;
     position: relative;
-    top: 2px;
-    left:7px;
+    top:30rpx;
+    left:42rpx;
     opacity: 1;
     font-weight: bold;
     /* 标准箭头 */
@@ -53,11 +52,14 @@
 .col.flag span {
     display: inline-block;
     position: relative;
-    top: 2px;
-    left:7px;
+    top:30rpx;
+    left:42rpx;
     opacity: 1;
     font-weight: bold;
     /* 标准箭头 */
     cursor:default;
 }
 
+.sub {
+    margin-top: 30rpx;
+}

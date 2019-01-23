@@ -4,16 +4,36 @@ const app = getApp()
 
 Page({
   data: {
-    mineMap: {}
+    mineMap: {},
+    sideLength: 5,
+    mineNum: 3,
+    remainMineNum: 3,
+    cleanMineNum: 0,
+    timesGo: 0,
+    timeInterval: null,
   },
+  //开始
   onLoad: function () {
     this.drawMineField()
-
+    this.timeGoClock()
+  },
+  //重新开始
+  restart: function(){
+    this.setData({
+      sideLength: 5,
+      mineNum: 3,
+      remainMineNum: 3,
+      cleanMineNum: 0,
+      timesGo: 0,
+    })
+    this.drawMineField()
+    this.timeGoReset()
+    this.timeGoClock()
   },
   // 生成地图
   drawMineField: function(){
-    var square = this.blankSquare(5)
-    square = this.writeInMine(square, 5)
+    var square = this.blankSquare(this.data.sideLength)
+    square = this.writeInMine(square, this.data.mineNum)
     square = this.markedSquare(square)
     square = this.formatMineField(square)
     this.setData({
@@ -168,14 +188,20 @@ Page({
     // console.log('y', y)
     // console.log('value', value)
     if (value < 0) return;
-    if (value != 9){
+    if (value != 9 && this.data.mineMap[x][y].open == false){
       this.data.mineMap[x][y].open = true
       // console.log('demining mineMap', this.data.mineMap)
       this.setData({
         mineMap: this.data.mineMap
       })
+      if(value == 0){
+        this.showNoMine(x, y)
+      }
+      this.data.cleanMineNum++
+      this.checkSuccess()
     }else{
       this.failed()
+      this.timeGoStop()
     }
 
   },
@@ -187,14 +213,17 @@ Page({
     var value = parseInt(event.currentTarget.dataset.value)
     if (this.data.mineMap[x][y].flag == true){
       this.data.mineMap[x][y].flag = false
+      this.data.remainMineNum++
     }else{
       this.data.mineMap[x][y].flag = true
+      this.data.remainMineNum--
     }
     this.setData({
-      mineMap: this.data.mineMap
+      mineMap: this.data.mineMap,
+      remainMineNum: this.data.remainMineNum,
     })
   },
-
+  //显示全部
   showAll: function(){
     var square = this.data.mineMap
     for (let i = 0; i < square.length; i++) {
@@ -207,6 +236,69 @@ Page({
     })
   },
 
+
+  //显示空白的格子
+  showWhite: function (x, y) {
+    var side_length = this.data.sideLength
+    var square = this.data.mineMap
+    if (x < side_length && y < side_length && x >= 0 && y >= 0) {
+      var item = square[x][y]
+      if (!item.open && item.value == 0) {
+        square[x][y].open = true
+        this.setData({
+          mineMap: square
+        })
+        this.data.cleanMineNum++
+        this.checkSuccess()
+        this.showNoMine(x, y)
+      }
+    }
+  },
+
+//显示周边8个位置无雷的格子
+  showNoMine: function (x, y) {
+    this.showWhite(x - 1, y + 1)
+    this.showWhite(x - 1, y - 1)
+    this.showWhite(x - 1, y)
+    this.showWhite(x + 1, y + 1)
+    this.showWhite(x + 1, y - 1)
+    this.showWhite(x + 1, y)
+    this.showWhite(x, y + 1)
+    this.showWhite(x, y - 1)
+  },
+
+  //判断是否成功
+  checkSuccess: function () {
+    if (this.data.cleanMineNum == this.data.sideLength * this.data.sideLength - this.data.mineNum) {
+      this.success()
+      this.timeGoStop()
+    }
+  },
+
+  //开始计时
+  timeGoClock: function () {
+    var self = this;
+    this.timeInterval = setInterval(function () {
+
+      self.data.timesGo = self.data.timesGo + 1;
+      self.setData({ timesGo: self.data.timesGo });
+
+    }, 1000);
+  },
+
+  // 停止计时
+  timeGoStop: function () {
+
+    clearInterval(this.timeInterval);
+  },
+
+  //时间重置
+  timeGoReset: function () {
+    clearInterval(this.timeInterval);
+    this.data.selftimesGo = 0;
+    this.setData({ timesGo: this.data.timesGo });
+  },
+  
   //失败
   failed: function () {
     wx.showToast({
@@ -218,6 +310,16 @@ Page({
     this.showAll()
   },
 
+  //成功
+  success: function () {
+    wx.showToast({
+      title: 'Success !!!',
+      icon: 'none',
+      mask: true,
+      duration: 3000
+    })
+    // this.showAll()
+  },
 
   
 })
