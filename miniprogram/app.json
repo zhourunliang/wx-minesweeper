@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/ranking/ranking"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "扫雷",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#000",
+    "selectedColor": "#56abe4",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/classify.png",
+        "selectedIconPath": "images/classify_on.png",
+        "text": "扫雷"
+      },
+      {
+        "pagePath": "pages/ranking/ranking",
+        "iconPath": "images/hotest.png",
+        "selectedIconPath": "images/hotest_on.png",
+        "text": "排行"
+      }
+    ]
+  },
+  "cloud": true
+}

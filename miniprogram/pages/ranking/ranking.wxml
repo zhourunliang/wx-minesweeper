@@ -1,0 +1,8 @@
+<!--pages/ranking.wxml-->
+<view class="container">
+
+  <view wx:for="{{ winterList }}" wx:for-index="i" wx:for-item="item" wx:key="itme">
+    <text>{{ item.time }}s@{{ item.date }}</text>
+  </view>
+
+</view>

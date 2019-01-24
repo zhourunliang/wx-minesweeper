@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const util = require('../../utils/util')
 
 Page({
   data: {
@@ -272,6 +273,7 @@ Page({
     if (this.data.cleanMineNum == this.data.sideLength * this.data.sideLength - this.data.mineNum) {
       this.success()
       this.timeGoStop()
+      this.addRecord()
     }
   },
 
@@ -319,6 +321,23 @@ Page({
       duration: 3000
     })
     // this.showAll()
+  },
+
+  //添加记录
+  addRecord: function(){
+    const db = wx.cloud.database()
+    db.collection('winer').add({
+      // data 字段表示需新增的 JSON 数据
+      data: {
+        time: this.data.timesGo,
+        date: util.getNowFormatDate(),
+        status: true
+      },
+      success(res) {
+        // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
+        console.log(res)
+      }
+    })
   },
 
   
