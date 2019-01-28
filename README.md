@@ -5,3 +5,8 @@
 + 上传并部署云函数
 + 修改miniprogram/config.js文件
 
+### 截图
+
+![界面](https://github.com/zhourunliang/wx-minesweeper/blob/master/images/demo.png)
+
+
